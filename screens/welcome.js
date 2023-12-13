@@ -1,19 +1,19 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
-import Button from "../components/button"; // Gantilah dengan path yang benar
+import Button from "../components/button";
+import Logo from "../components/logo";
+import {useSafeAreaInsets} from "react-native-safe-area-context"; // Gantilah dengan path yang benar
 
 const windowWidth = Dimensions.get("window").width;
 
 const Welcome = ({ navigation }) => {
+
+    const insets = useSafeAreaInsets();
+
     return (
-        <View style={styles.container}>
-            <View style={styles.imageContainer}>
-                <Image
-                    source={require("../assets/icon.png")}
-                    style={styles.image}
-                    resizeMode="cover"
-                />
-            </View>
+        <View style={{paddingTop: insets.top, ...styles.container}}>
+            <Logo>
+            </Logo>
             <View style={styles.contentContainer}>
                 <View style={styles.textContainer}>
                     <Text style={styles.title}>Selamat Datang</Text>
@@ -40,17 +40,13 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         alignItems: "center",
+        backgroundColor: "#ffffff"
     },
     imageContainer: {
         paddingTop: 50,
         flex: 1,
         width: windowWidth - 60,
         maxHeight: 250,
-    },
-    image: {
-        flex: 1,
-        width: null,
-        height: null,
     },
     contentContainer: {
         justifyContent: "space-between",
@@ -71,7 +67,6 @@ const styles = StyleSheet.create({
     description: {
         textAlign: "center",
         fontSize: 16,
-        color: "gray",
     },
     buttonContainer: {
         paddingBottom: 16,

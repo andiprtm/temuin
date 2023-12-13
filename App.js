@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import { Detail, Home, Login, Welcome } from './screens/index';
+import {SafeAreaProvider} from "react-native-safe-area-context";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,45 +17,44 @@ export default function App() {
   };
 
   return (
-    <NavigationContainer>
-      <StatusBar/>
-      <Stack.Navigator>
-        <Stack.Screen
-            name={"Welcome"}
-            component={Welcome}
-            options={{
-              title: "Temuin",
-              ...headerStyle,
-            }}
-        />
-        <Stack.Screen
-            name={"Login"}
-            component={Login}
-            options={{
-              title: "Temuin",
-              ...headerStyle,
-              headerBackVisible:false
-            }}
-        />
-        <Stack.Screen
-            name={"Home"}
-            component={Home}
-            options={{
-              title: "Temuin",
-              ...headerStyle,
-              headerBackVisible:false
-            }}
-        />
-        <Stack.Screen
-            name={"Detail"}
-            component={Detail}
-            options={{
-              title: "Temuin",
-              ...headerStyle,
-            }}
-        />
-      </Stack.Navigator>
-      
-    </NavigationContainer>
+      <SafeAreaProvider>
+          <NavigationContainer>
+              <StatusBar/>
+              <Stack.Navigator>
+                  <Stack.Screen
+                      name={"Welcome"}
+                      component={Welcome}
+                      options={{
+                          headerShown: false
+                      }}
+                  />
+                  <Stack.Screen
+                      name={"Login"}
+                      component={Login}
+                      options={{
+                          headerShown: false
+                      }}
+                  />
+                  <Stack.Screen
+                      name={"Home"}
+                      component={Home}
+                      options={{
+                          title: "Temuin",
+                          ...headerStyle,
+                          headerBackVisible:false
+                      }}
+                  />
+                  <Stack.Screen
+                      name={"Detail"}
+                      component={Detail}
+                      options={{
+                          title: "Temuin",
+                          ...headerStyle,
+                      }}
+                  />
+              </Stack.Navigator>
+
+          </NavigationContainer>
+      </SafeAreaProvider>
   )
 }
