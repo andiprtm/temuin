@@ -4,6 +4,8 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import { Detail, Home, Login, Welcome } from './screens/index';
 import {SafeAreaProvider} from "react-native-safe-area-context";
+import {socket} from "./config/socket";
+import {useEffect} from "react";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +17,10 @@ export default function App() {
     },
     headerTintColor: "white",
   };
+
+  useEffect(() => {
+    socket.connect()
+  }, []);
 
   return (
       <SafeAreaProvider>
