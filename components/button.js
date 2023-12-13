@@ -17,13 +17,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 16,
     borderColor: "#EDD4F4",
-    borderWidth: 3
+    borderWidth: 3,
   },
   text: {
     fontSize: 16,
     color: "#ffffff",
     fontFamily: "Poppins-Semibold",
-    letterSpacing: 1
+    letterSpacing: 1,
+    marginBottom: -2,
   },
 });
 
