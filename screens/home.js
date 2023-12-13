@@ -5,6 +5,7 @@ import WelcomeText from "../components/welcome-text";
 import {useFonts} from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Logo from "../components/logo";
+import Card from "../components/card";
 
 const Home = () => {
   const navigation = useNavigation();
@@ -35,19 +36,13 @@ const Home = () => {
       }}>
         <Logo/>
       </View>
-      <WelcomeText text={"Hi, Andi"}/>
+      <WelcomeText style={{marginBottom: 9,}} text={"Hi, Andi"}/>
       <Text style={styles.lokasimuSekarangBeradaContainer}>
         <Text style={styles.lokasimuSekarangBerada1}>{`Lokasimu sekarang berada di `}</Text>
         <Text style={styles.lantai2Sayap}>Lantai 2 sayap kiri</Text>
       </Text>
 
-      <TouchableOpacity
-        style={styles.grayBox}
-        onPress={() => navigation.navigate("Detail")}>
-        <Text style={styles.grayBoxText}>
-          Yuk, temukan temanmu yang berada di Lantai 2 sayap kiri
-        </Text>
-      </TouchableOpacity>
+      <Card/>
 
       <View style={styles.searchBarContainer}>
         <TextInput style={styles.searchBar} placeholder="Cari Temanmu..." />
@@ -72,9 +67,10 @@ const styles = StyleSheet.create({
   },
   lokasimuSekarangBeradaContainer: {
     fontSize: 14,
-    fontFamily: "Poppins-SemiBold",
+    fontFamily: "Poppins-Semibold",
     textAlign: "left",
-    width: 306
+    width: 306,
+    marginBottom: 9,
   },
   grayBox: {
     height: 80,
