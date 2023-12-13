@@ -17,11 +17,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    width: 200,
-    height: 40,
-    borderRadius: 20,
-    borderWidth: 1,
+    width: "100%",
+    height: 43,
+    borderRadius: 16,
+    borderWidth: 2,
     paddingLeft: 15,
+    borderColor: "#2A1E5A",
+    fontFamily: "Poppins-Medium"
   },
 });
 

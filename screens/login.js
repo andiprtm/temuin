@@ -1,30 +1,48 @@
-import React from "react";
+import React, {useCallback} from "react";
 import { View, Text, Dimensions, StyleSheet, Image } from "react-native";
 import Button from "../components/button";
 import Input from "../components/input";
+import Logo from "../components/logo";
+import LoginIlustration from "../components/login-ilustrasi";
+import SmilingFace from "../components/smilling-face";
+import {useFonts} from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import WavingHand from "../components/waving-hand";
 
 const windowWidth = Dimensions.get("window").width;
 
 const Login = ({ navigation }) => {
+    const [fontsLoaded] = useFonts({
+        'Poppins-Medium': require('../assets/font/Poppins-Medium.ttf'),
+        'Poppins-Semibold': require('../assets/font/Poppins-SemiBold.ttf'),
+    });
+
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) {
+        return null;
+    }
     return (
-        <View style={styles.container}>
-            <View style={styles.imageContainer}>
-                <Image
-                    source={require("../assets/icon.png")}
-                    style={styles.image}
-                    resizeMode="cover"
-                />
-            </View>
+        <View style={{paddingTop: 50, ...styles.container}}>
+            <Logo/>
+            <LoginIlustration/>
             <View style={styles.contentContainer}>
                 <View style={styles.textContainer}>
-                    <Text style={styles.title}>Isi Namamu Yuk</Text>
+                    <View style={styles.loginParent}>
+                        <Text style={styles.title}>Isi Namamu Yuk</Text>
+                        <SmilingFace style={styles.smilingFace}/>
+                    </View>
                     <View style={styles.formInput}>
                         <Input />
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
                     <Button
-                        text="Mulai Petualangan"
+                        text="Lihat Lokasi"
                         onPress={() => navigation.navigate("Home")}
                     />
                 </View>
@@ -64,19 +82,24 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
     },
     title: {
+        fontSize: 24,
+        fontFamily: "Poppins-Semibold",
         textAlign: "center",
-        fontSize: 18,
-        fontWeight: "bold",
-    },
-    description: {
-        textAlign: "center",
-        fontSize: 16,
-        color: "gray",
+        marginEnd: 6
     },
     buttonContainer: {
         paddingBottom: 16,
     },
     formInput: {
-        paddingTop: 20,
+        paddingTop: 2,
+    },
+    loginParent: {
+        flexDirection: "row", // Align children horizontally
+        alignItems: "center", // Center vertically
+        justifyContent: "center", // Center horizontally
+        paddingBottom: 16,
+    },
+    smilingFace: {
+        marginTop: -6
     },
 });
