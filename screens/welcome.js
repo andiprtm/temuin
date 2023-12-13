@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useCallback} from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 import Button from "../components/button";
 import Logo from "../components/logo";
-import {useSafeAreaInsets} from "react-native-safe-area-context"; // Gantilah dengan path yang benar
+import {useSafeAreaInsets} from "react-native-safe-area-context";
+import WelcomeIlustration from "../components/welcome-ilustrasi";
+import {useFonts} from "expo-font";
+import * as SplashScreen from 'expo-splash-screen';
+import WavingHand from "../components/waving-hand";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -10,13 +14,31 @@ const Welcome = ({ navigation }) => {
 
     const insets = useSafeAreaInsets();
 
+    const [fontsLoaded] = useFonts({
+        'Poppins-Medium': require('../assets/font/Poppins-Medium.ttf'),
+        'Poppins-Semibold': require('../assets/font/Poppins-SemiBold.ttf'),
+    });
+
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) {
+        return null;
+    }
+
     return (
-        <View style={{paddingTop: insets.top, ...styles.container}}>
-            <Logo>
-            </Logo>
+        <View style={{paddingTop: 50, ...styles.container}}>
+            <Logo/>
+            <WelcomeIlustration/>
             <View style={styles.contentContainer}>
                 <View style={styles.textContainer}>
-                    <Text style={styles.title}>Selamat Datang</Text>
+                    <View style={styles.selamatDatangParent}>
+                        <Text style={styles.title}>Selamat Datang</Text>
+                        <WavingHand style={styles.emojiWavingHandSign1}/>
+                    </View>
                     <Text style={styles.description}>
                         Temuin, adalah aplikasi untuk mengetahui lokasi temanmu
                         di dalam gedung Telkom University Kampus Surabaya
@@ -40,7 +62,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         alignItems: "center",
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
     },
     imageContainer: {
         paddingTop: 50,
@@ -60,15 +82,26 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
     },
     title: {
+        fontSize: 24,
+        fontFamily: "Poppins-Semibold",
         textAlign: "center",
-        fontSize: 18,
-        fontWeight: "bold",
+        marginEnd: 6
     },
     description: {
         textAlign: "center",
         fontSize: 16,
+        fontFamily: "Poppins-Medium"
     },
     buttonContainer: {
         paddingBottom: 16,
+    },
+    selamatDatangParent: {
+        flexDirection: "row", // Align children horizontally
+        alignItems: "center", // Center vertically
+        justifyContent: "center", // Center horizontally
+        paddingBottom: 16,
+    },
+    emojiWavingHandSign1: {
+        marginTop: -6
     },
 });
