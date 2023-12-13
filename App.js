@@ -39,9 +39,7 @@ export default function App() {
                       name={"Home"}
                       component={Home}
                       options={{
-                          title: "Temuin",
-                          ...headerStyle,
-                          headerBackVisible:false
+                          headerShown: false
                       }}
                   />
                   <Stack.Screen
