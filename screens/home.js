@@ -41,21 +41,22 @@ const Home = () => {
         <Text style={styles.lokasimuSekarangBerada1}>{`Lokasimu sekarang berada di `}</Text>
         <Text style={styles.lantai2Sayap}>Lantai 2 sayap kiri</Text>
       </Text>
-
-      <ScrollView horizontal={true} style={styles.scrollView}>
-        <View style={styles.card}>
-          <Card text={"Lantai 2 sayap kiri"}/>
-        </View>
-        <View style={styles.card}>
-          <Card text={"Lantai 2 sayap kiri"}/>
-        </View>
-        <View style={styles.card}>
-          <Card text={"Lantai 2 sayap kiri"}/>
-        </View>
-        <View style={styles.card}>
-          <Card text={"Lantai 2 sayap kiri"}/>
-        </View>
-      </ScrollView>
+      <View style={{height:'auto'}}>
+        <ScrollView horizontal={true} style={styles.scrollView}>
+          <View style={styles.card}>
+            <Card text={"Lantai 2 sayap kiri"}/>
+          </View>
+          <View style={styles.card}>
+            <Card text={"Lantai 2 sayap kiri"}/>
+          </View>
+          <View style={styles.card}>
+            <Card text={"Lantai 2 sayap kiri"}/>
+          </View>
+          <View style={styles.card}>
+            <Card text={"Lantai 2 sayap kiri"}/>
+          </View>
+        </ScrollView>
+      </View>
 
       <View style={styles.searchBarContainer}>
         <TextInput style={styles.searchBar} placeholder="Cari Temanmu..." />
@@ -112,12 +113,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   scrollView: {
-    height: 30,
     flexDirection: 'row',
     backgroundColor: "yellow",
   },
   card: {
-    height: "auto",
+    height: 'auto',
     width: 350, // Ubah sesuai kebutuhan
     marginRight: 10, // Untuk memberikan jarak antar card (opsional)
   },
