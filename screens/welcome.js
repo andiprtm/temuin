@@ -1,5 +1,6 @@
-import React, {useCallback} from "react";
-import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
+import React, {useCallback, useEffect, useState} from "react";
+import * as Location from "expo-location";
+import {View, Text, StyleSheet, Image, Dimensions, Linking} from "react-native";
 import Button from "../components/button";
 import Logo from "../components/logo";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
@@ -11,13 +12,31 @@ import WavingHand from "../components/waving-hand";
 const windowWidth = Dimensions.get("window").width;
 
 const Welcome = ({ navigation }) => {
-
     const insets = useSafeAreaInsets();
-
     const [fontsLoaded] = useFonts({
         'Poppins-Medium': require('../assets/font/Poppins-Medium.ttf'),
         'Poppins-Semibold': require('../assets/font/Poppins-SemiBold.ttf'),
     });
+    const [status, requestPermission] = Location.useForegroundPermissions()
+    const [locationGranted, setLocationGranted] = useState(false)
+
+    const getLocationPermission = () => {
+        requestPermission()
+            .then(r => r)
+            .catch(e => alert(e.toString()))
+    }
+
+    useEffect(() => {
+        if (status?.granted) {
+            setLocationGranted(true)
+        } else if (!status?.granted && status?.canAskAgain) {
+            getLocationPermission()
+        }
+    }, [status]);
+
+    useEffect(() => {
+        getLocationPermission()
+    }, []);
 
     const onLayoutRootView = useCallback(async () => {
         if (fontsLoaded) {
@@ -28,9 +47,8 @@ const Welcome = ({ navigation }) => {
     if (!fontsLoaded) {
         return null;
     }
-
     return (
-        <View style={{paddingTop: 50, ...styles.container}}>
+        <View onLayout={onLayoutRootView} style={{paddingTop: insets.top + 50, ...styles.container}}>
             <Logo/>
             <WelcomeIlustration/>
             <View style={styles.contentContainer}>
@@ -45,10 +63,20 @@ const Welcome = ({ navigation }) => {
                     </Text>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button
+                    {locationGranted &&<Button
                         text="Mulai Petualangan"
                         onPress={() => navigation.navigate("Login")}
-                    />
+                    />}
+                    {!locationGranted && <Button
+                        text="Beri Akses Lokasi"
+                        onPress={() => {
+                            requestPermission()
+                                .then(r => {
+                                    if (!r.canAskAgain) return Linking.openSettings()
+                                })
+                                .catch(e => alert(e.toString()))
+                        }}
+                    />}
                 </View>
             </View>
         </View>
