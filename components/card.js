@@ -1,18 +1,18 @@
 import * as React from "react";
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import FaceSavouring from "./face-savouring";
 import Next from "./next";
 
-const Frame = () => {
+const Card = (props) => {
 
     return (
-        <View style={[styles.emojiFaceSavouringDeliciouParent, styles.wrapperVector4FlexBox]}>
+        <TouchableOpacity style={[styles.emojiFaceSavouringDeliciouParent, styles.wrapperVector4FlexBox]}>
             <FaceSavouring style={styles.emojiFaceSavouringDeliciou1} />
-            <Text style={styles.yukTemukanTemanmu1}>Yuk, temukan temanmu yang berada di Lantai 2 sayap kiri</Text>
+            <Text style={styles.yukTemukanTemanmu1}>Yuk, temukan temanmu yang berada di {props.text}</Text>
             <View style={[styles.wrapperVector4, styles.wrapperVector4FlexBox]}>
                 <Next style={styles.wrapperVector4Child}/>
             </View>
-        </View>);
+        </TouchableOpacity>);
 };
 
 const styles = StyleSheet.create({
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Frame;
+export default Card;

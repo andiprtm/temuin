@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import WelcomeText from "../components/welcome-text";
 import {useFonts} from "expo-font";
@@ -42,7 +42,20 @@ const Home = () => {
         <Text style={styles.lantai2Sayap}>Lantai 2 sayap kiri</Text>
       </Text>
 
-      <Card/>
+      <ScrollView horizontal={true} style={styles.scrollView}>
+        <View style={styles.card}>
+          <Card text={"Lantai 2 sayap kiri"}/>
+        </View>
+        <View style={styles.card}>
+          <Card text={"Lantai 2 sayap kiri"}/>
+        </View>
+        <View style={styles.card}>
+          <Card text={"Lantai 2 sayap kiri"}/>
+        </View>
+        <View style={styles.card}>
+          <Card text={"Lantai 2 sayap kiri"}/>
+        </View>
+      </ScrollView>
 
       <View style={styles.searchBarContainer}>
         <TextInput style={styles.searchBar} placeholder="Cari Temanmu..." />
@@ -97,6 +110,16 @@ const styles = StyleSheet.create({
   },
   bottomText: {
     marginTop: 20,
+  },
+  scrollView: {
+    height: 30,
+    flexDirection: 'row',
+    backgroundColor: "yellow",
+  },
+  card: {
+    height: "auto",
+    width: 350, // Ubah sesuai kebutuhan
+    marginRight: 10, // Untuk memberikan jarak antar card (opsional)
   },
 });
 

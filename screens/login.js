@@ -39,6 +39,7 @@ const Login = ({ navigation }) => {
     const onSubmit = () => {
         if (!name) return alert('Nama kosong!')
         socket.emit('login', name)
+        navigation.navigate("Home")
     }
 
     const onLayoutRootView = useCallback(async () => {
