@@ -6,6 +6,8 @@ import {useFonts} from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Logo from "../components/logo";
 import Card from "../components/card";
+import MagnifierIcon from "../components/magnifier-icon";
+import UserList from "../components/user-list";
 
 const Home = () => {
   const navigation = useNavigation();
@@ -59,10 +61,15 @@ const Home = () => {
       </View>
 
       <View style={styles.searchBarContainer}>
-        <TextInput style={styles.searchBar} placeholder="Cari Temanmu..." />
+        <MagnifierIcon/>
+        <TextInput style={styles.searchBar} placeholder="cari temanmu" />
       </View>
 
-      <Text style={styles.bottomText}>Nama | Lokasi</Text>
+      <View style={{marginTop: 20}}>
+        <UserList name="Irvan" position="Lt 2 Sayap Kiri" />
+        <UserList name="Kahil" disabled />
+        <UserList name="Rayhan Furqoni" position="Lt 1 Sayap Kanan" />
+      </View>
     </View>
   );
 };
@@ -101,20 +108,22 @@ const styles = StyleSheet.create({
   searchBarContainer: {
     width: '100%',
     marginBottom: 10,
+    borderWidth: 2,
+    borderColor: '#2A1E5A',
+    borderRadius: 16,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   searchBar: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingLeft: 10,
-    width: '100%',
+    marginLeft: 15
   },
   bottomText: {
     marginTop: 20,
   },
   scrollView: {
     flexDirection: 'row',
-    backgroundColor: "yellow",
   },
   card: {
     height: 'auto',
