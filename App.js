@@ -25,7 +25,6 @@ export default function App() {
   return (
       <SafeAreaProvider>
           <NavigationContainer>
-              <StatusBar/>
               <Stack.Navigator>
                   <Stack.Screen
                       name={"Welcome"}

@@ -3,28 +3,36 @@
     "name": "temuin",
     "slug": "temuin",
     "version": "1.0.0",
-    "orientation": "portrait",                                                                                                                                        
+    "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
-    },                                                        
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.twohand.temuin"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.twohand.temuin"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a6a53c35-cc48-4485-a1d1-272b537e1882"
+      }
+    },
+    "owner": "twohand"
   }
 }

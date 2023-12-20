@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import WelcomeText from "../components/welcome-text";
@@ -8,15 +8,30 @@ import Logo from "../components/logo";
 import Card from "../components/card";
 import MagnifierIcon from "../components/magnifier-icon";
 import UserList from "../components/user-list";
+import {socket} from "../config/socket";
 
-const Home = () => {
-  const navigation = useNavigation();
-
+const Home = ({route}) => {
+  const {users, userData, position} = route.params
+  const {name, currentPosition} = userData
   const [fontsLoaded] = useFonts({
     'Poppins-Medium': require('../assets/font/Poppins-Medium.ttf'),
     'Poppins-Semibold': require('../assets/font/Poppins-SemiBold.ttf'),
     'Poppins-Bold': require('../assets/font/Poppins-Bold.ttf'),
   });
+  const [usersPosition, setUsersPosition] = useState(users)
+
+  useEffect(() => {
+    const onRefreshUserDataList = (data) => {
+      console.log('on refresh user data list', data)
+      setUsersPosition(data)
+    }
+
+    socket.on('refresh-user-lists', onRefreshUserDataList)
+
+    return () => {
+      socket.off('refresh-user-lists', onRefreshUserDataList)
+    }
+  }, []);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -29,7 +44,7 @@ const Home = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <View style={{
         flexDirection: "column",
         alignItems: "center",
@@ -38,25 +53,16 @@ const Home = () => {
       }}>
         <Logo/>
       </View>
-      <WelcomeText style={{marginBottom: 9,}} text={"Hi, Andi"}/>
+      <WelcomeText style={{marginBottom: 9,}} text={`Hi, ${name}`}/>
       <Text style={styles.lokasimuSekarangBeradaContainer}>
         <Text style={styles.lokasimuSekarangBerada1}>{`Lokasimu sekarang berada di `}</Text>
-        <Text style={styles.lantai2Sayap}>Lantai 2 sayap kiri</Text>
+        <Text style={styles.lantai2Sayap}>{currentPosition}</Text>
       </Text>
       <View style={{height:'auto'}}>
         <ScrollView horizontal={true} style={styles.scrollView}>
-          <View style={styles.card}>
-            <Card text={"Lantai 2 sayap kiri"}/>
-          </View>
-          <View style={styles.card}>
-            <Card text={"Lantai 2 sayap kiri"}/>
-          </View>
-          <View style={styles.card}>
-            <Card text={"Lantai 2 sayap kiri"}/>
-          </View>
-          <View style={styles.card}>
-            <Card text={"Lantai 2 sayap kiri"}/>
-          </View>
+          {position.map((item, index) => <View key={index} style={styles.card}>
+            <Card text={item.position}/>
+          </View>)}
         </ScrollView>
       </View>
 
@@ -66,9 +72,7 @@ const Home = () => {
       </View>
 
       <View style={{marginTop: 20}}>
-        <UserList name="Irvan" position="Lt 2 Sayap Kiri" />
-        <UserList name="Kahil" disabled />
-        <UserList name="Rayhan Furqoni" position="Lt 1 Sayap Kanan" />
+        {usersPosition.map((user,index) => <UserList key={index} name={user.name} position={user.currentPosition} />)}
       </View>
     </View>
   );

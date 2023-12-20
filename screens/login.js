@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {View, Text, Dimensions, StyleSheet, Image, ScrollView} from "react-native";
+import {View, Text, Dimensions, StyleSheet, ScrollView} from "react-native";
 import Button from "../components/button";
 import Input from "../components/input";
 import Logo from "../components/logo";
@@ -9,6 +9,7 @@ import {useFonts} from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import {socket} from "../config/socket";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {getClosestAccessPoint, refreshPosition} from "../config/get-mac";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -21,25 +22,31 @@ const Login = ({ navigation }) => {
     const [name, setName] = useState("")
 
     useEffect(() => {
-        const onSuccessfulLogin = (status) => {
-            // TODO PROD ONLY
-            // if (status) return navigation.navigate("Home")
-            // if (!status) return alert('Gagal melakukan login!')
-            // TODO DEV ONLY
-            navigation.navigate("Home")
+        const onLoginStatus = (response) => {
+            if (response.status) return navigation.reset({
+                index: 0,
+                routes: [{ name: 'Home', params: response.data }],
+            });
+            if (!response.status) return alert(response.message)
         }
 
-        socket.on('successfulLogin', onSuccessfulLogin)
+        socket.on('login-status', onLoginStatus)
 
         return () => {
-            socket.off('successfulLogin', onSuccessfulLogin)
+            socket.off('login-status', onLoginStatus)
         }
     }, []);
 
     const onSubmit = () => {
         if (!name) return alert('Nama kosong!')
-        socket.emit('login', name)
-        navigation.navigate("Home")
+        getClosestAccessPoint()
+            .then(r => socket.emit('login', {
+                name,
+                ssid: r.SSID,
+                mac: r.BSSID.toUpperCase()
+            }))
+            .catch(e => alert(e.toString()))
+        refreshPosition(name)
     }
 
     const onLayoutRootView = useCallback(async () => {
@@ -99,8 +106,6 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 46,
         paddingTop: 40,
-        // paddingTop: "10%",
-        // paddingBottom: "20%",
     },
     textContainer: {
         paddingBottom: 16,
@@ -116,9 +121,9 @@ const styles = StyleSheet.create({
         paddingBottom: 50
     },
     loginParent: {
-        flexDirection: "row", // Align children horizontally
-        alignItems: "center", // Center vertically
-        justifyContent: "center", // Center horizontally
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
         paddingBottom: 16,
     },
     smilingFace: {
