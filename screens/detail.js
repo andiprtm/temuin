@@ -1,11 +1,22 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text } from 'react-native';
 import {socket} from "../config/socket";
+import {storeData} from "../config/storage";
 
-const DetailScreen = () => {
+const DetailScreen = ({route}) => {
+  const {position, users} = route.params
+  const [rawUsers, setRawUsers] = useState(users)
+  const [filteredUsers, setFilteredUsers] = useState([])
+
   useEffect(() => {
-    const onRefreshUserDataList = (data) => {
-      console.log('on refresh user data list', data)
+    setFilteredUsers(rawUsers.filter(item => item.currentPosition === position))
+  }, [rawUsers]);
+
+  useEffect(() => {
+    const onRefreshUserDataList = async (data) => {
+      console.log('on refresh user data list (detail)', data)
+      setRawUsers(data)
+      await storeData('users-data', data)
     }
 
     socket.on('refresh-user-lists', onRefreshUserDataList)

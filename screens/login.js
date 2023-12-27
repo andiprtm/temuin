@@ -10,6 +10,7 @@ import * as SplashScreen from "expo-splash-screen";
 import {socket} from "../config/socket";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {getClosestAccessPoint, refreshPosition} from "../config/get-mac";
+import {storeData} from "../config/storage";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -22,11 +23,15 @@ const Login = ({ navigation }) => {
     const [name, setName] = useState("")
 
     useEffect(() => {
-        const onLoginStatus = (response) => {
-            if (response.status) return navigation.reset({
-                index: 0,
-                routes: [{ name: 'Home', params: response.data }],
-            });
+        const onLoginStatus = async (response) => {
+            if (response.status) {
+                const {users, userData, position} =  response.data
+                await storeData('users-data', users)
+                return navigation.reset({
+                    index: 0,
+                    routes: [{name: 'Home', params: {users, userData, position}}],
+                });
+            }
             if (!response.status) return alert(response.message)
         }
 

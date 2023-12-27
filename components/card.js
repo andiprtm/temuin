@@ -4,11 +4,11 @@ import FaceSavouring from "./face-savouring";
 import Next from "./next";
 import {useNavigation} from "@react-navigation/native";
 
-const Card = ({text}) => {
+const Card = ({text, users}) => {
     const navigation = useNavigation()
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('Detail')} style={[styles.emojiFaceSavouringDeliciouParent, styles.wrapperVector4FlexBox]}>
+        <TouchableOpacity onPress={() => navigation.navigate('Detail', {position: text, users})} style={[styles.emojiFaceSavouringDeliciouParent, styles.wrapperVector4FlexBox]}>
             <FaceSavouring style={styles.emojiFaceSavouringDeliciou1} />
             <Text style={styles.yukTemukanTemanmu1}>Yuk, temukan temanmu yang berada di {text}</Text>
             <View style={[styles.wrapperVector4, styles.wrapperVector4FlexBox]}>
