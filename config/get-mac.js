@@ -13,7 +13,7 @@ export const refreshPosition = (name) => {
           })
         })
         .catch(e => alert(e.toString()))
-  }, 10000)
+  }, 35000)
 }
 
 export const getClosestAccessPoint = async () => {

@@ -11,6 +11,7 @@ import {socket} from "../config/socket";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {getClosestAccessPoint, refreshPosition} from "../config/get-mac";
 import {storeData} from "../config/storage";
+import Loading from "../components/loading";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -21,18 +22,23 @@ const Login = ({ navigation }) => {
         'Poppins-Semibold': require('../assets/font/Poppins-SemiBold.ttf'),
     });
     const [name, setName] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         const onLoginStatus = async (response) => {
             if (response.status) {
                 const {users, userData, position} =  response.data
                 await storeData('users-data', users)
+                setIsLoading(false)
                 return navigation.reset({
                     index: 0,
                     routes: [{name: 'Home', params: {users, userData, position}}],
                 });
             }
-            if (!response.status) return alert(response.message)
+            if (!response.status) {
+                setIsLoading(false)
+                return alert(response.message)
+            }
         }
 
         socket.on('login-status', onLoginStatus)
@@ -44,13 +50,17 @@ const Login = ({ navigation }) => {
 
     const onSubmit = () => {
         if (!name) return alert('Nama kosong!')
+        setIsLoading(true)
         getClosestAccessPoint()
             .then(r => socket.emit('login', {
                 name,
                 ssid: r.SSID,
                 mac: r.BSSID.toUpperCase()
             }))
-            .catch(e => alert(e.toString()))
+            .catch(e => {
+                setIsLoading(false)
+                alert(e.toString())
+            })
         refreshPosition(name)
     }
 
@@ -64,25 +74,28 @@ const Login = ({ navigation }) => {
         return null;
     }
     return (
-        <ScrollView onLayout={onLayoutRootView}>
-            <View style={{paddingTop: insets.top + 50, ...styles.container}}>
-                <Logo/>
-                <LoginIlustration/>
-                <View style={styles.contentContainer}>
-                    <View style={styles.loginParent}>
-                        <Text style={styles.title}>Isi Namamu Yuk</Text>
-                        <SmilingFace style={styles.smilingFace}/>
+        <>
+            <ScrollView onLayout={onLayoutRootView}>
+                <View style={{paddingTop: insets.top + 50, ...styles.container}}>
+                    <Logo/>
+                    <LoginIlustration/>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.loginParent}>
+                            <Text style={styles.title}>Isi Namamu Yuk</Text>
+                            <SmilingFace style={styles.smilingFace}/>
+                        </View>
+                        <View style={styles.formInput}>
+                            <Input value={name} onChangeText={(val) => setName(val)} />
+                        </View>
+                        <Button
+                          text="Lihat Lokasi"
+                          onPress={onSubmit}
+                        />
                     </View>
-                    <View style={styles.formInput}>
-                        <Input value={name} onChangeText={(val) => setName(val)} />
-                    </View>
-                    <Button
-                        text="Lihat Lokasi"
-                        onPress={onSubmit}
-                    />
                 </View>
-            </View>
-        </ScrollView>
+            </ScrollView>
+            {isLoading && <Loading />}
+        </>
     );
 };
 
