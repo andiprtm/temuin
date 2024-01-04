@@ -9,9 +9,9 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const headerStyle = {
-    headerTitleStyle: { color: "white" },
+    headerTitleStyle: { color: "black" },
     headerStyle: {
-      backgroundColor: "#AA0002",
+      backgroundColor: "#ffffff",
     },
     headerTintColor: "white",
   };
@@ -24,6 +24,7 @@ export default function App() {
       <SafeAreaProvider>
           <NavigationContainer>
               <Stack.Navigator>
+
                   <Stack.Screen
                       name={"Welcome"}
                       component={Welcome}
