@@ -9,7 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 import CustomHeader from "../components/custom-header";
 import getNumberOfFloor from "../config/getNumberOfFloor";
 
-const DetailScreen = ({route}) => {
+const DetailScreen = ({route, navigation}) => {
     const {position, users} = route.params
     const [rawUsers, setRawUsers] = useState(users)
     const [filteredUsers, setFilteredUsers] = useState([])
@@ -68,7 +68,7 @@ const DetailScreen = ({route}) => {
           </View>
 
         <View style={{marginTop: 20}}>
-          <UserList name={"mmg"}/>
+            {filteredUsers.map((user,index) => <UserList key={index} name={user.name} position={user.currentPosition} />)}
         </View>
       </View>
     );
