@@ -88,9 +88,9 @@ const Home = ({route}) => {
         <TextInput style={styles.searchBar} placeholder="cari temanmu" />
       </View>
 
-      <View style={{marginTop: 20}}>
+      <ScrollView style={{marginTop: 20}}>
         {usersPosition.map((user,index) => <UserList key={index} name={user.name} position={user.currentPosition} />)}
-      </View>
+      </ScrollView>
     </View>
   );
 };

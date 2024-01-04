@@ -2,13 +2,12 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text, ScrollView, TextInput, Image, StyleSheet} from 'react-native';
 import {socket} from "../config/socket";
 import {storeData} from "../config/storage";
-import Logo from "../components/logo";
-import WelcomeText from "../components/welcome-text";
-import Card from "../components/card";
 import MagnifierIcon from "../components/magnifier-icon";
 import UserList from "../components/user-list";
 import {useFonts} from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import CustomHeader from "../components/custom-header";
+import getNumberOfFloor from "../config/getNumberOfFloor";
 
 const DetailScreen = ({route}) => {
     const {position, users} = route.params
@@ -20,23 +19,25 @@ const DetailScreen = ({route}) => {
         'Poppins-Bold': require('../assets/font/Poppins-Bold.ttf'),
     });
 
-    // useEffect(() => {
-    //   setFilteredUsers(rawUsers.filter(item => item.currentPosition === position))
-    // }, [rawUsers]);
-    //
-    // useEffect(() => {
-    //   const onRefreshUserDataList = async (data) => {
-    //     console.log('on refresh user data list (detail)', data)
-    //     setRawUsers(data)
-    //     await storeData('users-data', data)
-    //   }
-    //
-    //   socket.on('refresh-user-lists', onRefreshUserDataList)
-    //
-    //   return () => {
-    //     socket.off('refresh-user-lists', onRefreshUserDataList)
-    //   }
-    // }, []);
+    console.log(`ini dihalaman detail ${position}`)
+
+    useEffect(() => {
+      setFilteredUsers(rawUsers.filter(item => item.currentPosition === position))
+    }, [rawUsers]);
+
+    useEffect(() => {
+      const onRefreshUserDataList = async (data) => {
+        console.log('on refresh user data list (detail)', data)
+        setRawUsers(data)
+        await storeData('users-data', data)
+      }
+
+      socket.on('refresh-user-lists', onRefreshUserDataList)
+
+      return () => {
+        socket.off('refresh-user-lists', onRefreshUserDataList)
+      }
+    }, []);
 
     const onLayoutRootView = useCallback(async () => {
         if (fontsLoaded) {
@@ -50,18 +51,21 @@ const DetailScreen = ({route}) => {
 
     return (
       <View style={styles.container} onLayout={onLayoutRootView}>
+
         <View style={{
-          flexDirection: "column",
-          alignItems: "center",
-          paddingTop: 50,
-          marginBottom: 25,
+          paddingTop: 20,
         }}>
-          <Logo/>
+            <CustomHeader onPress={() => navigation.goBack()} numberOfFlor={getNumberOfFloor(position)}/>
         </View>
 
         <View style={{alignItems: "center",}}>
-          <Image style={{height: 380, width:380}} source={{uri: "https://is3.cloudhost.id/andiprtm/Frame%201078%20%281%29.png",}}/>
+          <Image style={{height: 223, width:380, resizeMode: "contain"}} source={{uri: "https://is3.cloudhost.id/andiprtm/Group%201501%201.png",}}/>
         </View>
+
+          <View style={styles.searchBarContainer}>
+              <MagnifierIcon/>
+              <TextInput style={styles.searchBar} placeholder="cari temanmu" />
+          </View>
 
         <View style={{marginTop: 20}}>
           <UserList name={"mmg"}/>
@@ -76,32 +80,6 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: "#ffffff"
     },
-    lokasimuSekarangBerada1: {
-        color: "#000",
-        marginTop: 6
-    },
-    lantai2Sayap: {
-        color: "#ffc300"
-    },
-    lokasimuSekarangBeradaContainer: {
-        fontSize: 14,
-        fontFamily: "Poppins-Semibold",
-        textAlign: "left",
-        width: 306,
-        marginBottom: 9,
-    },
-    grayBox: {
-        height: 80,
-        width: '100%',
-        backgroundColor: 'gray',
-        marginBottom: 10,
-        justifyContent: 'center',
-    },
-    grayBoxText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
     searchBarContainer: {
         width: '100%',
         marginBottom: 10,
@@ -115,17 +93,6 @@ const styles = StyleSheet.create({
     },
     searchBar: {
         marginLeft: 15
-    },
-    bottomText: {
-        marginTop: 20,
-    },
-    scrollView: {
-        flexDirection: 'row',
-    },
-    card: {
-        height: 'auto',
-        width: 350, // Ubah sesuai kebutuhan
-        marginRight: 10, // Untuk memberikan jarak antar card (opsional)
     },
 });
 

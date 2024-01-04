@@ -47,11 +47,10 @@ export default function App() {
                       }}
                   />
                   <Stack.Screen
-                      name={"Detail"}
+                      name={"DetailScreen"}
                       component={Detail}
                       options={{
-                          title: "Temuin",
-                          ...headerStyle,
+                          headerShown: false
                       }}
                   />
               </Stack.Navigator>
