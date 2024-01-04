@@ -18,12 +18,19 @@ const DetailScreen = ({route, navigation}) => {
         'Poppins-Semibold': require('../assets/font/Poppins-SemiBold.ttf'),
         'Poppins-Bold': require('../assets/font/Poppins-Bold.ttf'),
     });
+    const [textSearch, setTexSearch] = useState(filteredUsers)
+
+    useEffect(() => {
+        setFilteredUsers(filteredUsers.filter(() => filteredUsers.name.toString().toLowerCase().includes(textSearch.toLowerCase())));
+    }, [textSearch]);
 
     console.log(`ini dihalaman detail ${position}`)
 
     useEffect(() => {
       setFilteredUsers(rawUsers.filter(item => item.currentPosition === position))
     }, [rawUsers]);
+
+
 
     useEffect(() => {
       const onRefreshUserDataList = async (data) => {
@@ -64,7 +71,7 @@ const DetailScreen = ({route, navigation}) => {
 
           <View style={styles.searchBarContainer}>
               <MagnifierIcon/>
-              <TextInput style={styles.searchBar} placeholder="cari temanmu" />
+              <TextInput onChange={(text) => setTexSearch(text)} style={styles.searchBar} placeholder="cari temanmu" />
           </View>
 
         <View style={{marginTop: 20}}>

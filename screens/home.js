@@ -25,7 +25,7 @@ const Home = ({route}) => {
   const [textSearch, setTexSearch] = useState(users)
 
   useEffect(() => {
-    setUsersPosition(users.filter(() => users.name.toLowerCase().includes(textSearch.toLowerCase())));
+    setUsersPosition(users.filter(() => users.name.toString().toLowerCase().includes(textSearch.toLowerCase())));
   }, [textSearch]);
 
   useEffect(() => {
