@@ -22,6 +22,11 @@ const Home = ({route}) => {
   });
   const [location, setLocation] = useState(currentPosition)
   const [usersPosition, setUsersPosition] = useState(users)
+  const [textSearch, setTexSearch] = useState(users)
+
+  useEffect(() => {
+    setUsersPosition(users.filter(() => users.name.toLowerCase().includes(textSearch.toLowerCase())));
+  }, [textSearch]);
 
   useEffect(() => {
     const onRefreshUserDataList = async (data) => {
@@ -85,7 +90,7 @@ const Home = ({route}) => {
 
       <View style={styles.searchBarContainer}>
         <MagnifierIcon/>
-        <TextInput style={styles.searchBar} placeholder="cari temanmu" />
+        <TextInput onChange={(text) => setTexSearch(text)} style={styles.searchBar} placeholder="cari temanmu" />
       </View>
 
       <ScrollView style={{marginTop: 20}}>
