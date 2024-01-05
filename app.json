@@ -33,6 +33,12 @@
         "projectId": "a6a53c35-cc48-4485-a1d1-272b537e1882"
       }
     },
-    "owner": "twohand"
+    "owner": "twohand",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a6a53c35-cc48-4485-a1d1-272b537e1882"
+    }
   }
 }

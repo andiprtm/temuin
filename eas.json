@@ -9,6 +9,15 @@
         "buildType": "apk"
       }
     },
-    "production": {}
+    "production": {
+      "channel": "production",
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://indoor-positioning.duakaryadigital.com"
+      }
+    }
   }
 }
