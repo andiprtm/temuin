@@ -24,6 +24,8 @@ const Home = ({route}) => {
   const [usersPosition, setUsersPosition] = useState(users)
   const [textSearch, setTexSearch] = useState('')
 
+  console.log(position)
+
   useEffect(() => {
     setUsersPosition(users.filter(user => user.name.toLowerCase().includes(textSearch.toLowerCase())));
   }, [textSearch]);
@@ -83,7 +85,7 @@ const Home = ({route}) => {
       <View style={{height:'auto'}}>
         <ScrollView horizontal={true} style={styles.scrollView}>
           {position.map((item, index) => <View key={index} style={styles.card}>
-            <Card text={item.position} users={users} />
+            <Card text={[item.position, item.image]} users={users} />
           </View>)}
         </ScrollView>
       </View>

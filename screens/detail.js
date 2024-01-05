@@ -20,17 +20,17 @@ const DetailScreen = ({route, navigation}) => {
     });
     const [textSearch, setTexSearch] = useState('')
 
+    console.log(`ini gambar ${position[1]}`)
+
     useEffect(() => {
         setFilteredUsers(filteredUsers.filter(() => filteredUsers.name.toLowerCase().includes(textSearch.toLowerCase())));
     }, [textSearch]);
 
-    console.log(`ini dihalaman detail ${position}`)
+    console.log(`ini dihalaman detail ${position[0]}`)
 
     useEffect(() => {
-      setFilteredUsers(rawUsers.filter(item => item.currentPosition === position))
+      setFilteredUsers(rawUsers.filter(item => item.currentPosition === position[0]))
     }, [rawUsers]);
-
-
 
     useEffect(() => {
       const onRefreshUserDataList = async (data) => {
@@ -62,11 +62,11 @@ const DetailScreen = ({route, navigation}) => {
         <View style={{
           paddingTop: 20,
         }}>
-            <CustomHeader onPress={() => navigation.goBack()} numberOfFlor={getNumberOfFloor(position)}/>
+            <CustomHeader onPress={() => navigation.goBack()} numberOfFlor={getNumberOfFloor(position[0])}/>
         </View>
 
         <View style={{alignItems: "center",}}>
-          <Image style={{height: 223, width:380, resizeMode: "contain"}} source={{uri: "https://is3.cloudhost.id/andiprtm/Group%201501%201.png",}}/>
+          <Image style={{height: 223, width:380, resizeMode: "contain"}} source={{uri: `${position[1]}`,}}/>
         </View>
 
           <View style={styles.searchBarContainer}>
