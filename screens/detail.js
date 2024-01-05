@@ -18,10 +18,10 @@ const DetailScreen = ({route, navigation}) => {
         'Poppins-Semibold': require('../assets/font/Poppins-SemiBold.ttf'),
         'Poppins-Bold': require('../assets/font/Poppins-Bold.ttf'),
     });
-    const [textSearch, setTexSearch] = useState(filteredUsers)
+    const [textSearch, setTexSearch] = useState('')
 
     useEffect(() => {
-        setFilteredUsers(filteredUsers.filter(() => filteredUsers.name.toString().toLowerCase().includes(textSearch.toLowerCase())));
+        setFilteredUsers(filteredUsers.filter(() => filteredUsers.name.toLowerCase().includes(textSearch.toLowerCase())));
     }, [textSearch]);
 
     console.log(`ini dihalaman detail ${position}`)
@@ -71,7 +71,7 @@ const DetailScreen = ({route, navigation}) => {
 
           <View style={styles.searchBarContainer}>
               <MagnifierIcon/>
-              <TextInput onChange={(text) => setTexSearch(text)} style={styles.searchBar} placeholder="cari temanmu" />
+              <TextInput onChangeText={text => setTexSearch(text)} style={styles.searchBar} placeholder="cari temanmu" />
           </View>
 
         <View style={{marginTop: 20}}>

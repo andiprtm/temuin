@@ -22,10 +22,10 @@ const Home = ({route}) => {
   });
   const [location, setLocation] = useState(currentPosition)
   const [usersPosition, setUsersPosition] = useState(users)
-  const [textSearch, setTexSearch] = useState(users)
+  const [textSearch, setTexSearch] = useState('')
 
   useEffect(() => {
-    setUsersPosition(users.filter(() => users.name.toString().toLowerCase().includes(textSearch.toLowerCase())));
+    setUsersPosition(users.filter(user => user.name.toLowerCase().includes(textSearch.toLowerCase())));
   }, [textSearch]);
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const Home = ({route}) => {
 
       <View style={styles.searchBarContainer}>
         <MagnifierIcon/>
-        <TextInput onChange={(text) => setTexSearch(text)} style={styles.searchBar} placeholder="cari temanmu" />
+        <TextInput onChangeText={text => setTexSearch(text)} style={styles.searchBar} placeholder="cari temanmu" />
       </View>
 
       <ScrollView style={{marginTop: 20}}>
