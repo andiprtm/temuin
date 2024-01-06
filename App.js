@@ -9,11 +9,11 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const headerStyle = {
-    headerTitleStyle: { color: "black" },
+    headerTitleStyle: { color: "#000000" },
     headerStyle: {
       backgroundColor: "#000000",
     },
-    headerTintColor: "black",
+    headerTintColor: "#ffffff",
   };
 
   useEffect(() => {
