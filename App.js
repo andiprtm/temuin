@@ -29,28 +29,32 @@ export default function App() {
                       name={"Welcome"}
                       component={Welcome}
                       options={{
-                          headerShown: false
+                          headerShown: false,
+                          ...headerStyle
                       }}
                   />
                   <Stack.Screen
                       name={"Login"}
                       component={Login}
                       options={{
-                          headerShown: false
+                          headerShown: false,
+                          ...headerStyle
                       }}
                   />
                   <Stack.Screen
                       name={"Home"}
                       component={Home}
                       options={{
-                          headerShown: false
+                          headerShown: false,
+                          ...headerStyle
                       }}
                   />
                   <Stack.Screen
                       name={"DetailScreen"}
                       component={Detail}
                       options={{
-                          headerShown: false
+                          headerShown: false,
+                          ...headerStyle
                       }}
                   />
               </Stack.Navigator>

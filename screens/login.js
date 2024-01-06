@@ -74,12 +74,14 @@ const Login = ({ navigation }) => {
         return null;
     }
     return (
-        <>
-            <ScrollView onLayout={onLayoutRootView}>
-                <View style={{paddingTop: insets.top + 50, ...styles.container}}>
-                    <Logo/>
-                    <LoginIlustration/>
-                    <View style={styles.contentContainer}>
+        <View style={{flex:1, backgroundColor: "#ffffff",paddingHorizontal: 0}}>
+            <View onLayout={onLayoutRootView} style={{paddingTop: insets.top, ...styles.container}}>
+                <ScrollView style={{backgroundColor: "#ffffff", width: windowWidth}}>
+                    <View style={{alignItems: "center"}}>
+                        <Logo/>
+                        <LoginIlustration/>
+                    </View>
+                    <View style={styles.contentContainer} >
                         <View style={styles.loginParent}>
                             <Text style={styles.title}>Isi Namamu Yuk</Text>
                             <SmilingFace style={styles.smilingFace}/>
@@ -88,14 +90,14 @@ const Login = ({ navigation }) => {
                             <Input value={name} onChangeText={(val) => setName(val)} />
                         </View>
                         <Button
-                          text="Lihat Lokasi"
-                          onPress={onSubmit}
+                            text="Lihat Lokasi"
+                            onPress={onSubmit}
                         />
                     </View>
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </View>
             {isLoading && <Loading />}
-        </>
+        </View>
     );
 };
 
@@ -103,10 +105,9 @@ export default Login;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex:1,
         flexDirection: "column",
         alignItems: "center",
-        backgroundColor: "#ffffff"
     },
     imageContainer: {
         paddingTop: 50,
@@ -123,8 +124,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         flex: 1,
         width: '100%',
-        paddingHorizontal: 46,
         paddingTop: 40,
+        paddingHorizontal: "10%"
     },
     textContainer: {
         paddingBottom: 16,

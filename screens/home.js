@@ -72,7 +72,7 @@ const Home = ({route}) => {
       <View style={{
         flexDirection: "column",
         alignItems: "center",
-        paddingTop: 50,
+        paddingTop: 20,
         marginBottom: 25,
       }}>
         <Logo/>
@@ -105,7 +105,7 @@ const Home = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
     backgroundColor: "#ffffff"
   },
   lokasimuSekarangBerada1: {
