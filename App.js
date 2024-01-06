@@ -11,9 +11,9 @@ export default function App() {
   const headerStyle = {
     headerTitleStyle: { color: "black" },
     headerStyle: {
-      backgroundColor: "#ffffff",
+      backgroundColor: "#000000",
     },
-    headerTintColor: "white",
+    headerTintColor: "black",
   };
 
   useEffect(() => {

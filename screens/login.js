@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         alignItems: "center",
+        backgroundColor: "#ffffff"
     },
     imageContainer: {
         paddingTop: 50,

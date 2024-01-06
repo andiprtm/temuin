@@ -5,6 +5,10 @@
       "distribution": "internal"
     },
     "preview": {
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://indoor-positioning.duakaryadigital.com"
+      },
       "android": {
         "buildType": "apk"
       }
@@ -12,11 +16,11 @@
     "production": {
       "channel": "production",
       "distribution": "internal",
-      "android": {
-        "buildType": "apk"
-      },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://indoor-positioning.duakaryadigital.com"
+      },
+      "android": {
+        "buildType": "apk"
       }
     }
   }
