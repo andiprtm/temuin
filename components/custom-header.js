@@ -3,10 +3,12 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Back from "./back";
 import BackIcon from "./back";
 import Lantai from "./lantai";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 function CustomHeader({onPress, numberOfFlor}) {
+    const insets = useSafeAreaInsets()
     return (
-        <View style={styles.container}>
+        <View style={{...styles.container, marginTop: insets.top}}>
             <View style={styles.warpBack}>
                 <TouchableOpacity onPress={onPress}>
                     <BackIcon/>

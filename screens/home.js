@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView} from 'react-native';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {View, Text, StyleSheet, TextInput, ScrollView} from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
 import WelcomeText from "../components/welcome-text";
 import {useFonts} from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -9,10 +9,12 @@ import Card from "../components/card";
 import MagnifierIcon from "../components/magnifier-icon";
 import UserList from "../components/user-list";
 import {socket} from "../config/socket";
-import {getData, storeData} from "../config/storage";
+import {storeData} from "../config/storage";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 const Home = ({route}) => {
   const isFocus = useIsFocused()
+  const insets = useSafeAreaInsets()
   const {users, userData, position} = route.params
   const {name, currentPosition} = userData
   const [fontsLoaded] = useFonts({
@@ -23,8 +25,6 @@ const Home = ({route}) => {
   const [location, setLocation] = useState(currentPosition)
   const [usersPosition, setUsersPosition] = useState(users)
   const [textSearch, setTexSearch] = useState('')
-
-  console.log(position)
 
   useEffect(() => {
     setUsersPosition(users.filter(user => user.name.toLowerCase().includes(textSearch.toLowerCase())));
@@ -41,20 +41,32 @@ const Home = ({route}) => {
       await storeData('users-data',data)
     }
 
+    const onCurrentUsersList = (users) => {
+      console.log('onCurrentUsersList (home)', users)
+      setUsersPosition(users)
+    }
+
+    const onUserDisconnected = (users) => {
+      console.log('onUserDisconnected (home)', users)
+      setUsersPosition(users)
+    }
+
     socket.on('refresh-user-lists', onRefreshUserDataList)
+    socket.on('current-users-list', onCurrentUsersList)
+    socket.on('user-disconnected', onUserDisconnected)
 
     return () => {
       socket.off('refresh-user-lists', onRefreshUserDataList)
+      socket.off('current-users-list', onCurrentUsersList)
+      socket.off('user-disconnected', onUserDisconnected)
     }
   }, []);
 
   useEffect(() => {
-    (async () => {
-      if (isFocus) {
-        const usersData = await getData('users-data')
-        setUsersPosition(usersData)
-      }
-    })()
+    if (isFocus) {
+      socket.emit('get-current-data', {filter: null})
+      console.log('focused home')
+    }
   }, [isFocus]);
 
   const onLayoutRootView = useCallback(async () => {
@@ -68,7 +80,7 @@ const Home = ({route}) => {
   }
 
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
+    <View style={{...styles.container, paddingTop: insets.top}} onLayout={onLayoutRootView}>
       <View style={{
         flexDirection: "column",
         alignItems: "center",

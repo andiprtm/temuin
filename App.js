@@ -1,7 +1,7 @@
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import { Detail, Home, Login, Welcome } from './screens/index';
-import {SafeAreaProvider} from "react-native-safe-area-context";
+import {SafeAreaProvider, useSafeAreaInsets} from "react-native-safe-area-context";
 import {socket} from "./config/socket";
 import {useEffect} from "react";
 
@@ -24,7 +24,6 @@ export default function App() {
       <SafeAreaProvider>
           <NavigationContainer>
               <Stack.Navigator>
-
                   <Stack.Screen
                       name={"Welcome"}
                       component={Welcome}
