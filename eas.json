@@ -7,7 +7,7 @@
     "preview": {
       "distribution": "internal",
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://indoor-positioning.duakaryadigital.com"
+        "EXPO_PUBLIC_API_URL": "https://temuin.andinesia.my.id"
       },
       "android": {
         "buildType": "apk"
@@ -17,7 +17,7 @@
       "channel": "production",
       "distribution": "internal",
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://indoor-positioning.duakaryadigital.com"
+        "EXPO_PUBLIC_API_URL": "https://temuin.andinesia.my.id"
       },
       "android": {
         "buildType": "apk"

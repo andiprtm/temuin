@@ -22,7 +22,7 @@ export const getClosestAccessPoint = async () => {
     if (accessPoints.includes('only allowed to scan 4 times per 2 minuts in a foreground app.')){
       accessPoints = await WifiManager.loadWifiList();
     }
-    const matchSSID = accessPoints.filter(item => item.SSID === 'ITTelkom_Surabaya')
+    const matchSSID = accessPoints.filter(item => item.SSID === 'TelkomUniv_Surabaya')
     if (matchSSID.length === 0) {
       return {
         SSID: '',
